@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-public class Aoc2022Application {
+public class AdventOfCodeApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Aoc2022Application.class, args);
+        SpringApplication.run(AdventOfCodeApplication.class, args);
     }
 
     @Bean

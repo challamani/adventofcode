@@ -26,19 +26,19 @@ public class Aoc2022Controller {
         this.puzzleMap=puzzleMap;
     }
 
-    @PostMapping("/aoc2022/{day}")
+    @PostMapping("/2022/{day}")
     public ResponseEntity<Response<Object>> solveThePuzzle(
             @PathVariable(name = "day", required = false) String day,
             @RequestBody String request) {
-        log.info("list of keys {}", puzzleMap.keySet());
 
+        //log.info("list of keys {}", puzzleMap.keySet());
         if (puzzleMap.containsKey(day)) {
             Object result = puzzleMap.get(day).solve(request);
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new Response<>(result));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new Response<>("Puzzle implementation not exists"));
+                    .body(new Response<>("Puzzle implementation not found"));
         }
     }
 

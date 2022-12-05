@@ -22,6 +22,8 @@ public class Day1 implements Puzzle<String,Integer> {
     /**
      * Question : https://adventofcode.com/2022/day/1
      * Input : https://adventofcode.com/2022/day/1/input
+     * Calculate max calories from the given calories - sum of top 3, segment-sum
+     *
      * */
     public Integer solve(String input) {
         String[] inputData = input.split("\\n");
@@ -34,7 +36,7 @@ public class Day1 implements Puzzle<String,Integer> {
             try {
                 caloriesSegSum += Integer.parseInt(calories);
             } catch (Exception ex) {
-                log.info("exception at converting string to int {}", calories);
+                //log.info("exception at converting string to int {}", calories);
                 if (maxCalories < caloriesSegSum) {
                     maxCalories = caloriesSegSum;
                 }
@@ -49,8 +51,8 @@ public class Day1 implements Puzzle<String,Integer> {
             maxCalories = caloriesSegSum;
         }
         //part-1, return maxCalories
-        log.info("final result - segment-sum {} maxCal {}", caloriesSegSum, maxCalories);
 
+        log.info("final result - segment-sum {} maxCal {}", caloriesSegSum, maxCalories);
         TreeSet<Integer> reverseSet = (TreeSet<Integer>) treeSet.descendingSet();
         log.info("TreeSet {}", reverseSet);
 

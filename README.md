@@ -24,3 +24,10 @@ http://localhost:9090/aoc/v1/2022/day3
 ```shell
 http://localhost:9090/aoc/v1/2022/day4
 ```
+
+#### Day 5 - 
+
+#### Day 6 - first occurrence of 4/14 distinct characters
+```shell
+http://localhost:9090/aoc/v1/2022/day6
+```

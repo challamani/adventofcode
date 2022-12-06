@@ -25,7 +25,10 @@ http://localhost:9090/aoc/v1/2022/day3
 http://localhost:9090/aoc/v1/2022/day4
 ```
 
-#### Day 5 - 
+#### Day 5 - Stack push/pop/peek - written bruteforce solution, optimal solution is deleting repeatable same moves does no impact - not yet implemented.
+```shell
+http://localhost:9090/aoc/v1/2022/day5
+```
 
 #### Day 6 - first occurrence of 4/14 distinct characters
 ```shell

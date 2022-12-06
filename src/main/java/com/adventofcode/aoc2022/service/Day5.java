@@ -70,6 +70,40 @@ public class Day5 implements Puzzle<String,String>{
                 log.info("moves {} from {} to {}", moves, from, to);
                 log.info("stack {}",stackMap);
 
+                //Dumb bruteforce solution - I'll update with optimal solution
+                Stack<String> tempStack = new Stack<>();
+                IntStream.range(0, moves).forEach(move -> {
+                    String popItem = stackMap.get(from).pop();
+                    tempStack.push(popItem);
+                });
+
+                IntStream.range(0, moves).forEach(move -> stackMap.get(to).push(tempStack.pop()));
+            }
+        }
+        StringBuffer stringBuffer = new StringBuffer("");
+        IntStream.range(1,10).forEach(key -> {
+            stringBuffer.append(stackMap.get(key).peek());
+        });
+
+        log.info("final output {}",stringBuffer);
+        return stringBuffer.toString();
+    }
+
+
+    public String part1(String input) {
+
+        Pattern pattern = Pattern.compile("move (\\d+) from (\\d+) to (\\d+)");
+        for (String record : input.split("\\n")) {
+
+            Matcher matcher = pattern.matcher(record);
+            if (matcher.find()) {
+                int moves = Integer.parseInt(matcher.group(1));
+                int from = Integer.parseInt(matcher.group(2));
+                int to = Integer.parseInt(matcher.group(3));
+
+                log.info("moves {} from {} to {}", moves, from, to);
+                log.info("stack {}",stackMap);
+
                 IntStream.range(0, moves).forEach(move -> {
                     String popItem = stackMap.get(from).pop();
                     stackMap.get(to).push(popItem);

@@ -15,7 +15,7 @@ public class Day4 implements Puzzle<String,Integer>{
      *       [][][]
      * [][][][]
      *
-     *  [][][]
+     *   [][][]
      * [][][][][]
      *
      * [][][][][][]

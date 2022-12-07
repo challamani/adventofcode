@@ -34,3 +34,8 @@ http://localhost:9090/aoc/v1/2022/day5
 ```shell
 http://localhost:9090/aoc/v1/2022/day6
 ```
+
+#### Day 7 - No Space Left On Device - Map with dotted keys should solve the problem <root.sub1.sub2> 
+```shell
+http://localhost:9090/aoc/v1/2022/day7
+```

@@ -39,3 +39,9 @@ http://localhost:9090/aoc/v1/2022/day6
 ```shell
 http://localhost:9090/aoc/v1/2022/day7
 ```
+
+#### Day 8 - Treetop Tree House
+
+```shell
+http://localhost:9090/aoc/v1/2022/day8
+```

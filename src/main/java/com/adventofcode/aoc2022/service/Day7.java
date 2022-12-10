@@ -72,13 +72,9 @@ public class Day7 implements Puzzle<String,Integer> {
                         cascadeValueToParents(dirSize,current_dir,fSize);
                         break;
                 }
-            }else{
-                log.info("Something wrong! {}",record);
-                break;
             }
         }
 
-        //part2
         int rootSize = dirSize.get("ROOT");
         int unusedSpace = 70000000 - rootSize;
         log.info("current unused space {} and desired-space {} required-space {}",unusedSpace, 30000000,(30000000 - unusedSpace));
@@ -90,7 +86,7 @@ public class Day7 implements Puzzle<String,Integer> {
                 min.set(stringIntegerEntry.getValue());
             }
         });
-
+        
         //log.info("dirSize {}",dirSize);
 
         /** part1
@@ -110,8 +106,4 @@ public class Day7 implements Puzzle<String,Integer> {
             lastIndex = key.lastIndexOf(".");
         }
     }
-
-
-
-
 }

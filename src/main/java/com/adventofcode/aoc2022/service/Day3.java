@@ -3,8 +3,10 @@ package com.adventofcode.aoc2022.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service("day3")
 @Slf4j
@@ -54,15 +56,14 @@ public class Day3 implements Puzzle<String,Integer>{
         return finalResult;
     }
 
-    private int part1(String input){
-        int finalResult = 0;
-        for (String record : input.split("\\n")) {
-
+    private int part1(String input) {
+        AtomicInteger finalResult = new AtomicInteger();
+        Arrays.stream(input.split("\\n")).forEach(record -> {
             int len = record.length();
             String compartmentOne = record.substring(0, len / 2);
             String compartmentTwo = record.substring(len / 2);
 
-            log.info("one {} two {}",compartmentOne,compartmentTwo);
+            log.info("one {} two {}", compartmentOne, compartmentTwo);
             Map<String, Integer> charMap = new HashMap<>();
             for (char ch : compartmentOne.toCharArray()) {
                 charMap.putIfAbsent(ch + "", 0);
@@ -71,14 +72,14 @@ public class Day3 implements Puzzle<String,Integer>{
             for (char ch : compartmentTwo.toCharArray()) {
                 if (charMap.containsKey(ch + "")) {
                     if (ch >= 'a' && ch <= 'z') {
-                        finalResult += (ch - 96);
+                        finalResult.addAndGet((ch - 96));
                     } else {
-                        finalResult += (ch - 38);
+                        finalResult.addAndGet((ch - 38));
                     }
                     break;
                 }
             }
-        }
-        return finalResult;
+        });
+        return finalResult.get();
     }
 }

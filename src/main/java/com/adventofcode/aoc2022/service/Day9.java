@@ -4,13 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.RequestScope;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.IntStream;
 
 @Service("day9")
 @Slf4j
-@RequestScope
 public class Day9 implements Puzzle<String,Integer> {
 
     @Override
@@ -18,6 +18,9 @@ public class Day9 implements Puzzle<String,Integer> {
         return part1And2(input);
     }
 
+    /**
+     *
+     * */
     private Integer part1And2(String input) {
 
         /**
@@ -32,7 +35,7 @@ public class Day9 implements Puzzle<String,Integer> {
         int[][] rope = {{10000, 10000}, {10000, 10000}, {10000, 10000}, {10000, 10000}, {10000, 10000}, {10000, 10000}, {10000, 10000}, {10000, 10000}, {10000, 10000}, {10000, 10000}};
         int lastTailIndex = 9;
 
-        for (String record : input.split("\\n")) {
+        Arrays.stream(input.split("\\n")).forEach(record -> {
 
             String direction = record.split(" ")[0];
             int moves = Integer.parseInt(record.split(" ")[1]);
@@ -51,25 +54,24 @@ public class Day9 implements Puzzle<String,Integer> {
                         rope[0][1] -= 1;
                         break;
                 }
-
                 IntStream.range(0, lastTailIndex).forEach(index -> {
-                    int[] head=rope[index];
-                    int[] tail=rope[index + 1];
-                    if (!isAdjacentOne(head, tail)) {
-                        tail[0] = tail[0] + addSingleMoveToRelativeDirection(head[0],tail[0]);
-                        tail[1] = tail[1] + addSingleMoveToRelativeDirection(head[1],tail[1]);
+                    int[] head = rope[index];
+                    int[] tail = rope[index + 1];
+                    if (!isAdjacentKnot(head, tail)) {
+                        tail[0] = tail[0] + addSingleMoveAsPerHead(head[0], tail[0]);
+                        tail[1] = tail[1] + addSingleMoveAsPerHead(head[1], tail[1]);
                     }
                 });
                 populateCoveredPositions(rope[lastTailIndex], coveredPositions);
                 printLogs(record, move, rope);
             });
             log.info("after [{}] rope {}", record, rope);
-        }
+        });
         log.info("tail positions {}", coveredPositions);
         return coveredPositions.size();
     }
 
-    private int addSingleMoveToRelativeDirection(int headPosition, int tailPosition) {
+    private int addSingleMoveAsPerHead(int headPosition, int tailPosition) {
         if (headPosition - tailPosition <= -1)
             return -1;
         else if (headPosition - tailPosition >= 1)
@@ -126,7 +128,7 @@ public class Day9 implements Puzzle<String,Integer> {
         }
     }
 
-    private boolean isAdjacentOne(int[] head, int[] tail) {
+    private boolean isAdjacentKnot(int[] head, int[] tail) {
 
         boolean isAdjacent = false;
         if (head[0] == tail[0] && tail[1] == head[1]) {

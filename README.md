@@ -45,3 +45,13 @@ http://localhost:9090/aoc/v1/2022/day7
 ```shell
 http://localhost:9090/aoc/v1/2022/day8
 ```
+
+#### Day 9 - Rope Bridge, required a two dimensional array to hold head/tail position (x,y), tail follows head movement - similar to snake move/game
+```shell
+http://localhost:9090/aoc/v1/2022/day9
+```
+
+#### Day 10 - CRT draws pixel in position where it meets sprite
+```shell
+http://localhost:9090/aoc/v1/2022/day10
+```

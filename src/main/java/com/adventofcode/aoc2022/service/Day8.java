@@ -44,7 +44,6 @@ public class Day8 implements Puzzle<String,Integer> {
         }
 
         final int[] maxScenicScore = {Integer.MIN_VALUE};
-
         int len = rows[0].length();
         IntStream.range(1,len-1).forEach(colSpot -> {
             int rowInd = 0;
@@ -178,14 +177,10 @@ public class Day8 implements Puzzle<String,Integer> {
         int interiorTreesCnt = 0;
         rowIndex = 1;
 
-        //log.info("bottom position max {}", bottomPositionMax);
         while (rowIndex < (rowsCnt - 1)) {
             int colIndex = 0;
             int rowLen = rows[rowIndex].length();
             maxValue.get("LEFT").putIfAbsent(rowIndex, Integer.parseInt(rows[rowIndex].charAt(0) + ""));
-
-            //log.info("index {} row {} ", rowIndex, rows[rowIndex]);
-            //log.info("top position max {}", topPositionMax.get(rowIndex));
 
             for (char ch : rows[rowIndex].toCharArray()) {
 
@@ -206,7 +201,6 @@ public class Day8 implements Puzzle<String,Integer> {
                     isVisible = true;
                 }
 
-                //Position Max
                 if (colIndex != (rowLen - 1) && treeHeight > topPositionMax.get(rowIndex).get(colIndex + 1)) {
                     isVisible = true;
                 }
@@ -214,7 +208,6 @@ public class Day8 implements Puzzle<String,Integer> {
                     isVisible = true;
                 }
 
-                //log.info("char [{}] col {} row {} visible {}", ch + "", colIndex, rowsCnt, isVisible);
                 if (isVisible) {
                     interiorTreesCnt += 1;
                 }

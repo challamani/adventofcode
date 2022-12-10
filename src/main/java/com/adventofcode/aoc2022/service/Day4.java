@@ -3,6 +3,9 @@ package com.adventofcode.aoc2022.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Service("day4")
 @Slf4j
 public class Day4 implements Puzzle<String,Integer>{
@@ -25,10 +28,9 @@ public class Day4 implements Puzzle<String,Integer>{
     @Override
     public Integer solve(String input) {
 
-        int finalResult = 0;
+        AtomicInteger finalResult = new AtomicInteger();
 
-        for (String record : input.split("\\n")) {
-
+        Arrays.stream(input.split("\\n")).forEach(record -> {
             String[] sections = record.split(",");
             String[] sectionOne = sections[0].split("-");
             String[] sectionTwo = sections[1].split("-");
@@ -39,25 +41,23 @@ public class Day4 implements Puzzle<String,Integer>{
             int sMajor = Integer.parseInt(sectionTwo[1]);
 
             if (fMinor >= sMinor && fMinor <= sMajor) {
-                finalResult += 1;
+                finalResult.addAndGet(1);
             } else if (fMajor >= sMinor && fMajor <= sMajor) {
-                finalResult += 1;
+                finalResult.addAndGet(1);
             } else if (fMinor <= sMinor && fMajor >= sMajor) {
-                finalResult += 1;
+                finalResult.addAndGet(1);
             } else if (sMinor <= fMinor && sMajor >= fMajor) {
-                finalResult += 1;
+                finalResult.addAndGet(1);
             }
-        }
-        return finalResult;
+        });
+        return finalResult.get();
     }
 
 
     private Integer part1(String input) {
 
-        int finalResult = 0;
-
-        for (String record : input.split("\\n")) {
-
+        AtomicInteger finalResult = new AtomicInteger();
+        Arrays.stream(input.split("\\n")).forEach(record -> {
             String[] sections = record.split(",");
             String[] sectionOne = sections[0].split("-");
             String[] sectionTwo = sections[1].split("-");
@@ -69,14 +69,14 @@ public class Day4 implements Puzzle<String,Integer>{
 
             if ((fMajor - fMinor) >= (sMajor - sMinor)) {
                 if (fMinor <= sMinor && fMajor >= sMajor) {
-                    finalResult += 1;
+                    finalResult.addAndGet(1);
                 }
             } else {
                 if (sMinor <= fMinor && sMajor >= fMajor) {
-                    finalResult += 1;
+                    finalResult.addAndGet(1);
                 }
             }
-        }
-        return finalResult;
+        });
+        return finalResult.get();
     }
 }

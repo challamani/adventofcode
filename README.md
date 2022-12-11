@@ -55,3 +55,8 @@ http://localhost:9090/aoc/v1/2022/day9
 ```shell
 http://localhost:9090/aoc/v1/2022/day10
 ```
+#### Day 11 - LCM & mod operation based problem - when integer value goes out of range need to perform mod operation to reduce the value.
+
+```shell
+http://localhost:9090/aoc/v1/2022/day11
+```

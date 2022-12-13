@@ -20,7 +20,7 @@ public class Day11 implements Puzzle<String,Object> {
     private String trueVar = "true";
     private String falseVar = "false";
 
-    private int LCM = 9699690; //LCM of 3,11,19,5,2,7,17,13
+    private int LCM = 9699690; //LCM of 3*11*19*5*2*7*17*13
 
     @Override
     public Object solve(String input) {

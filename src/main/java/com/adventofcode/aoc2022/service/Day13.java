@@ -22,50 +22,107 @@ public class Day13 implements Puzzle<String,Object> {
             ++index;
             NumSet left = new NumSet(records[i]);
             NumSet right = new NumSet(records[i + 1]);
+
             sumOfIndices += left.compareTo(right) < 0 ? index : 0;
-            log.info("left {} right {}",left,right);
+            //boolean hashSet = compare(records[i], records[i + 1]);
+            //log.info("numberSet {} hashSet {}", numberSet, hashSet);
         }
-        return sumOfIndices;
+
+        List<NumSet> setOfNumberSets = new ArrayList<>();
+        for (int i = 0; i < len; i += 3) {
+            ++index;
+            NumSet left = new NumSet(records[i]);
+            NumSet right = new NumSet(records[i + 1]);
+            setOfNumberSets.add(left);
+            setOfNumberSets.add(right);
+        }
+
+        NumSet dividerOne = new NumSet("[[2]]");
+        NumSet dividerTwo = new NumSet("[[6]]");
+        setOfNumberSets.add(dividerOne);
+        setOfNumberSets.add(dividerTwo);
+
+        Collections.sort(setOfNumberSets);
+        String decoderKey = String.valueOf((setOfNumberSets.indexOf(dividerOne) + 1) * (setOfNumberSets.indexOf(dividerTwo) + 1));
+
+        return new Integer[]{sumOfIndices, Integer.parseInt(decoderKey)};
     }
 
     private boolean compare(String left, String right) {
-
         Map<String, List<Integer>> leftMap = new TreeMap<>();
         Map<String, List<Integer>> rightMap = new TreeMap<>();
 
-        List<List<Integer>> leftSets = new ArrayList<>();
-        List<List<Integer>> rightSets = new ArrayList<>();
+        left  = frameTheInput(left);
+        right = frameTheInput(right);
 
-        //left = frameTheInput(left);
-        //right = frameTheInput(right);
+        populateElements("ROOT", left, leftMap);
+        populateElements("ROOT", right, rightMap);
 
-        //Populate keys - using hashmap <root>.<0>.<1>.<2>...<n level>
+        Set<String> keySets =  (leftMap.size() <= rightMap.size() ? leftMap : rightMap).keySet();
+        List<String> keyList = new ArrayList<>(keySets);
+        Collections.sort(keyList);
 
-        log.info("left elements {}", leftSets);
-        log.info("right elements {}", rightSets);
+        //Collections.reverse(keyList);
+        int minSize = Math.min(leftMap.size(), rightMap.size());
+        int sameElements = 0;
         boolean isRightMatch = false;
 
-
-        int minSize = Math.min(leftSets.size(), rightSets.size());
-        int sameElements = 0;
         for (int i = 0; i < minSize; i++) {
-            boolean[] result = compareListItems(leftSets.get(i), rightSets.get(i));
-            if (result[0]) {
-                isRightMatch = true;
+            int compareResult = compareListItems(leftMap.get(keyList.get(i)), rightMap.get(keyList.get(i)));
+            if (compareResult != 0) {
+                isRightMatch = (compareResult < 1);
                 break;
-            } else if (!result[1]) {
-                isRightMatch = false;
-                break;
-            } else {
-                sameElements++;
             }
+            sameElements++;
         }
 
-        if (!isRightMatch && sameElements == minSize && leftSets.size() < rightSets.size()) {
+        if (!isRightMatch && (sameElements == minSize && leftMap.size() < rightMap.size())) {
             isRightMatch = true;
         }
         return isRightMatch;
     }
+
+    private void populateElements(String key, String input, Map<String, List<Integer>> map) {
+
+        input = input.substring(1, input.length() - 1);
+        int subsetDepth = 0;
+        int index = -1;
+        char[] chars = input.toCharArray();
+        int len = input.length();
+        while (++index < input.length()) {
+
+            if (subsetDepth == 0 && chars[index] == ',') {
+                map.putIfAbsent(key, new ArrayList<>());
+            } else {
+                if (chars[index] == '[') {
+                    key = getKeyCount(key, map.keySet());
+                    map.putIfAbsent(key, new ArrayList<>());
+                    subsetDepth++;
+                } else if (chars[index] == ']') {
+                    if (key.lastIndexOf(".") > 0) {
+                        key = key.substring(0, key.lastIndexOf("."));
+                    }
+                    subsetDepth--;
+                } else if(chars[index] >= '0' && chars[index] <= '9') {
+                    StringBuilder number = new StringBuilder();
+                    while (index < len && chars[index] >= '0' && chars[index] <= '9') {
+                        number.append(chars[index]);
+                        ++index;
+                    }
+                    map.putIfAbsent(key, new ArrayList<>());
+                    map.get(key).add(Integer.parseInt(number.toString()));
+                    index -= (number.length() > 1) ? 1 : 0;
+                }
+            }
+        }
+    }
+
+    private String getKeyCount(final String key, Set<String> keySet) {
+        long count = keySet.stream().filter(keyStr -> keyStr.startsWith(key)).count();
+        String newKey = key.concat(".").concat(Long.toString(count));
+        return newKey;
+    }
+
 
     private String frameTheInput(String input) {
         int len = input.length();
@@ -73,14 +130,12 @@ public class Day13 implements Puzzle<String,Object> {
         int index = 0;
 
         while (index < len && index != -1) {
-
             if (temp.substring(index).indexOf("],") > 0) {
                 index = temp.substring(index).indexOf("],") + index;
                 index += 2;
             }else {
                 index = -1;
             }
-
             if (index > 0 && temp.charAt(index) >= '0' && temp.charAt(index) <= '9') {
                 temp = temp.substring(0, index).concat("[").concat(temp.substring(index));
                 index += temp.substring(index).indexOf("]");
@@ -89,35 +144,19 @@ public class Day13 implements Puzzle<String,Object> {
                 index++;
             }
         }
-        log.info("frameTheInput before {} after {}", input, temp);
         return temp;
     }
 
-    private boolean[] compareListItems(List<Integer> left, List<Integer> right) {
+    private int compareListItems(List<Integer> left, List<Integer> right) {
 
-        if (right != null && right.size() == 0 && left.size() == 0) {
-            return new boolean[]{true, true};
-        } else if ((right == null || right.size() == 0) && left != null && left.size() >= 0) {
-            return new boolean[]{false, false};
-        }
-
-        int size = Math.min(left.size(), right.size());
-        ;
-        boolean isRightMatch = false;
-
-        int equalMatch = 0;
+        int size = Math.min((Objects.nonNull(left) ? left.size() : 0), (Objects.nonNull(right) ? right.size():0));
         for (int i = 0; i < size; i++) {
-            if (right.get(i) > left.get(i)) {
-                isRightMatch = true;
-                break;
-            } else if (right.get(i) == left.get(i)) {
-                equalMatch++;
-            } else {
-                break;
+            int val = Integer.compare(left.get(i), right.get(i));
+            if (val != 0) {
+                return val;
             }
         }
-        return new boolean[]{(isRightMatch || (equalMatch == left.size() && left.size() < right.size())),
-                (equalMatch == left.size() && left.size() == right.size())};
+        return Integer.compare(Objects.nonNull(left) ? left.size() : 0, Objects.nonNull(right) ? right.size() : 0);
     }
 
 }
@@ -176,9 +215,9 @@ class NumSet implements Comparable<NumSet>{
         } else if (this.isNumber()) {
             return new NumSet("[" + getValue() + "]").compareTo(numberSet);
         } else if (!this.isNumber() && !numberSet.isNumber()) {
+
             int minSize = Math.min(this.getSubsets().size(), numberSet.getSubsets().size());
             for (int i = 0; i < minSize; i++) {
-                log.info("left {} right {}", this.getSubsets(), numberSet.getSubsets());
                 int compare = this.getSubsets().get(i).compareTo(numberSet.getSubsets().get(i));
                 if (compare != 0) {
                     return compare;
@@ -188,6 +227,14 @@ class NumSet implements Comparable<NumSet>{
         } else {
             return this.compareTo(new NumSet("[" + numberSet.getValue() + "]"));
         }
+    }
+
+    @Override
+    public String toString() {
+        return "NumSet{" +
+                "subsets=" + subsets +
+                ", value=" + value +
+                '}';
     }
 
     public Integer getValue(){
@@ -200,5 +247,9 @@ class NumSet implements Comparable<NumSet>{
 
     public void setSubsets(List<NumSet> subsets) {
         this.subsets = subsets;
+    }
+
+    public String getContent(){
+        return content;
     }
 }

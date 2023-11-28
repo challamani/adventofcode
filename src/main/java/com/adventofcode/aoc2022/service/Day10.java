@@ -19,13 +19,7 @@ public class Day10 implements Puzzle<String, List<String>>{
      * Input : https://adventofcode.com/2022/day/10/input
      * Day 10 - Cathode-Ray Tube
      * */
-    @Override
-    public List<String> solve(String input) {
-        //return part1(input);
-        return part2(input);
-    }
-
-    private List<String> part2(String input) {
+    public List<String> part2(String input) {
 
         StringBuilder[] screen = new StringBuilder[6];
         IntStream.range(0, 6).forEach(index -> {
@@ -78,7 +72,7 @@ public class Day10 implements Puzzle<String, List<String>>{
         screen[row].setCharAt(position, '#');
     }
 
-    private Integer part1(String input) {
+    public List<String> part1(String input) {
 
         AtomicInteger signalStrength = new AtomicInteger(0);
         AtomicInteger cycleCount = new AtomicInteger(0);
@@ -105,7 +99,7 @@ public class Day10 implements Puzzle<String, List<String>>{
                 registerValue.addAndGet(instructionAddValue);
             }
         });
-        return signalStrength.get();
+        return List.of(Integer.toString(signalStrength.get()));
     }
 
     private int returnSignalStrength(int cycleCount, int registerValue){

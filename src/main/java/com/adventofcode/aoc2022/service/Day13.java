@@ -10,7 +10,12 @@ import java.util.*;
 @Slf4j
 public class Day13 implements Puzzle<String,Object> {
     @Override
-    public Object solve(String input) {
+    public Object part1(String input) {
+        return null;
+    }
+
+    @Override
+    public Object part2(String input) {
 
         String[] records = input.split("\\n");
         int len = records.length;
@@ -24,8 +29,6 @@ public class Day13 implements Puzzle<String,Object> {
             NumSet right = new NumSet(records[i + 1]);
 
             sumOfIndices += left.compareTo(right) < 0 ? index : 0;
-            //boolean hashSet = compare(records[i], records[i + 1]);
-            //log.info("numberSet {} hashSet {}", numberSet, hashSet);
         }
 
         List<NumSet> setOfNumberSets = new ArrayList<>();

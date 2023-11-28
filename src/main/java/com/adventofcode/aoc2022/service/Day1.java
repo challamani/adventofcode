@@ -1,9 +1,7 @@
 package com.adventofcode.aoc2022.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.TreeSet;
@@ -14,22 +12,12 @@ import java.util.concurrent.atomic.AtomicReference;
 @Slf4j
 public class Day1 implements Puzzle<String,Integer> {
 
-    private final RestTemplate restTemplate;
-
-    @Autowired
-    public Day1(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
-
     /**
      * Question : https://adventofcode.com/2022/day/1
      * Input : https://adventofcode.com/2022/day/1/input
      * Calculate max calories from the given calories - sum of top 3, segment-sum
      */
-    public Integer solve(String input) {
-        String[] inputData = input.split("\\n");
-        log.info("Length {} ", inputData.length);
-
+    public Integer part2(String input) {
         AtomicInteger caloriesSegSum = new AtomicInteger(0);
         TreeSet<Integer> treeSet = new TreeSet<>();
         AtomicInteger maxCalories = new AtomicInteger(0);
@@ -38,8 +26,7 @@ public class Day1 implements Puzzle<String,Integer> {
         Arrays.stream(input.split("\\n")).forEach(calories -> {
             try {
                 caloriesSegSum.addAndGet(Integer.parseInt(calories));
-            } catch (Exception ex) {
-                //log.info("exception at converting string to int {}", calories);
+            } catch (Exception exception) {
                 if (finalMaxCalories.get() < caloriesSegSum.get()) {
                     finalMaxCalories.set(caloriesSegSum.get());
                 }
@@ -53,7 +40,6 @@ public class Day1 implements Puzzle<String,Integer> {
         if (maxCalories.get() < caloriesSegSum.get()) {
             maxCalories = caloriesSegSum;
         }
-        //part-1, return maxCalories
 
         log.info("final result - segment-sum {} maxCal {}", caloriesSegSum, maxCalories);
         TreeSet<Integer> reverseSet = (TreeSet<Integer>) treeSet.descendingSet();
@@ -62,8 +48,29 @@ public class Day1 implements Puzzle<String,Integer> {
         AtomicReference<Integer> finalResult = new AtomicReference<>(0);
         reverseSet.stream().limit(3).forEach(sumOfSegCalories ->
                 finalResult.updateAndGet(v -> v + sumOfSegCalories));
-
-        //return part-2 sum of top 3 seg sum - 212520
         return finalResult.get();
+    }
+
+    public Integer part1(String input) {
+        AtomicInteger caloriesSegSum = new AtomicInteger(0);
+        AtomicInteger maxCalories = new AtomicInteger(0);
+        AtomicInteger finalMaxCalories = maxCalories;
+
+        Arrays.stream(input.split("\\n")).forEach(calories -> {
+            try {
+                caloriesSegSum.addAndGet(Integer.parseInt(calories));
+            } catch (Exception exception) {
+                if (finalMaxCalories.get() < caloriesSegSum.get()) {
+                    finalMaxCalories.set(caloriesSegSum.get());
+                }
+                log.info("segment-sum {} maxCal {}", caloriesSegSum, finalMaxCalories.get());
+                caloriesSegSum.set(0);
+            }
+        });
+
+        if (maxCalories.get() < caloriesSegSum.get()) {
+            maxCalories = caloriesSegSum;
+        }
+        return maxCalories.get();
     }
 }

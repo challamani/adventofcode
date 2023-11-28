@@ -13,11 +13,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Day6 implements Puzzle<String,Integer> {
 
 
+    @Override
+    public Integer part1(String input) {
+        return null;
+    }
+
     /**
      * Problem - first Occurrence of distinct 4/14 characters in a string
      */
     @Override
-    public Integer solve(String input) {
+    public Integer part2(String input) {
         AtomicInteger result = new AtomicInteger();
         Arrays.stream(input.split("\\n")).forEach(record -> {
             int len = record.length();
@@ -43,5 +48,4 @@ public class Day6 implements Puzzle<String,Integer> {
         }
         return (charMap.keySet().size() == 14);
     }
-
 }

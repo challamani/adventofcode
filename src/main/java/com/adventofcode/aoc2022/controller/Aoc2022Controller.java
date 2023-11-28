@@ -26,14 +26,30 @@ public class Aoc2022Controller {
         this.puzzleMap=puzzleMap;
     }
 
-    @PostMapping("/2022/{day}")
-    public ResponseEntity<Response<Object>> solveThePuzzle(
+    @PostMapping("/2022/{day}/part1")
+    public ResponseEntity<Response<Object>> solvePart1(
             @PathVariable(name = "day", required = false) String day,
             @RequestBody String request) {
 
         //log.info("list of keys {}", puzzleMap.keySet());
         if (puzzleMap.containsKey(day)) {
-            Object result = puzzleMap.get(day).solve(request);
+            Object result = puzzleMap.get(day).part1(request);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new Response<>(result));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new Response<>("Puzzle implementation not found"));
+        }
+    }
+
+    @PostMapping("/2022/{day}/part2")
+    public ResponseEntity<Response<Object>> solvePart2(
+            @PathVariable(name = "day", required = false) String day,
+            @RequestBody String request) {
+
+        //log.info("list of keys {}", puzzleMap.keySet());
+        if (puzzleMap.containsKey(day)) {
+            Object result = puzzleMap.get(day).part2(request);
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new Response<>(result));
         } else {

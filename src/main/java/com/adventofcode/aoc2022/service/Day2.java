@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class Day2 implements Puzzle<String,Integer> {
     @Override
-    public Integer solve(String input) {
+    public Integer part2(String input) {
         /**
          * A,B,C - 65,66,67
          * X,Y,Z - 88,89,90
@@ -48,8 +48,7 @@ public class Day2 implements Puzzle<String,Integer> {
         return score.get();
     }
 
-    private int part1(String input) {
-
+    public Integer part1(String input) {
         AtomicInteger score = new AtomicInteger();
         Arrays.stream(input.split("\\n")).forEach(round -> {
             int yourVal = round.charAt(2);

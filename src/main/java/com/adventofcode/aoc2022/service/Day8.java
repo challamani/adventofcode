@@ -17,16 +17,10 @@ public class Day8 implements Puzzle<String,Integer> {
      * Note: This is not an optimal solution, there can N of solutions might be available and achievable in less than o(n*n)
      * Below solution consumes more memory but less than o(n*n) time-complexity
      */
-    @Override
-    public Integer solve(String input) {
-        //return part1(input);
-        return part2(input);
-    }
-
 
     /**
      * Sorry for this bruteforce solution */
-    private Integer part2(String input) {
+    public Integer part2(String input) {
 
         String[] rows = input.split("\\n");
 
@@ -127,7 +121,7 @@ public class Day8 implements Puzzle<String,Integer> {
 
 
 
-    private Integer part1(String input) {
+    public Integer part1(String input) {
 
         String[] rows = input.split("\\n");
         int rowsCnt = rows.length;

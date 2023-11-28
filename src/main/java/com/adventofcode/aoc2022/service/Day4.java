@@ -26,7 +26,7 @@ public class Day4 implements Puzzle<String,Integer>{
      *
      * */
     @Override
-    public Integer solve(String input) {
+    public Integer part2(String input) {
 
         AtomicInteger finalResult = new AtomicInteger();
 
@@ -54,7 +54,7 @@ public class Day4 implements Puzzle<String,Integer>{
     }
 
 
-    private Integer part1(String input) {
+    public Integer part1(String input) {
 
         AtomicInteger finalResult = new AtomicInteger();
         Arrays.stream(input.split("\\n")).forEach(record -> {

@@ -58,7 +58,7 @@ public class Day5 implements Puzzle<String,String> {
     }
 
     @Override
-    public String solve(String input) {
+    public String part2(String input) {
 
         Pattern pattern = Pattern.compile("move (\\d+) from (\\d+) to (\\d+)");
         Arrays.stream(input.split("\\n")).forEach(record -> {

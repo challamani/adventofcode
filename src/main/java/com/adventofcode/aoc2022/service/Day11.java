@@ -23,7 +23,12 @@ public class Day11 implements Puzzle<String,Object> {
     private int LCM = 9699690; //LCM of 3*11*19*5*2*7*17*13
 
     @Override
-    public Object solve(String input) {
+    public Object part1(String input) {
+        return null;
+    }
+
+    @Override
+    public Object part2(String input) {
 
         itemWorryValue = new HashMap<>();
         monkeyItems = new HashMap<>();

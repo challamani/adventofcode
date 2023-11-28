@@ -15,7 +15,12 @@ public class Day12 implements Puzzle<String,Object> {
     private int[][] adjacentNode = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
 
     @Override
-    public Object solve(String input) {
+    public Object part1(String input) {
+        return null;
+    }
+
+    @Override
+    public Object part2(String input) {
         return partOneAndTwo(input);
     }
 
@@ -86,6 +91,7 @@ public class Day12 implements Puzzle<String,Object> {
 
             int sourceRow = record[3];
             int sourceCol = record[4];
+
             int newHeight = map[targetRow][targetColumn];
             int oldHeight = map[sourceRow][sourceCol];
             if (!(newHeight <= oldHeight + 1)) {
@@ -101,6 +107,7 @@ public class Day12 implements Puzzle<String,Object> {
 
             priorityQueue.add(new int[]{targetDistance + 1, targetRow + 1, targetColumn + 0, targetRow, targetColumn});
             priorityQueue.add(new int[]{targetDistance + 1, targetRow - 1, targetColumn + 0, targetRow, targetColumn});
+
             IntStream.range(0, maxRows).forEach(range -> log.info("visited {}", visited[range]));
             IntStream.range(0, maxRows).forEach(range -> log.info("distance {}", distance[range]));
         }

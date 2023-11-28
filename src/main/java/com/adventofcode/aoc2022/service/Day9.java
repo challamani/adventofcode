@@ -2,7 +2,6 @@ package com.adventofcode.aoc2022.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -13,16 +12,16 @@ import java.util.stream.IntStream;
 @Slf4j
 public class Day9 implements Puzzle<String,Integer> {
 
+
     @Override
-    public Integer solve(String input) {
-        return part1And2(input);
+    public Integer part1(String input) {
+        return null;
     }
 
     /**
      *
      * */
-    private Integer part1And2(String input) {
-
+    public Integer part2(String input) {
         /**
          * Part -1
          * int[][] rope = {{10000, 10000}, {10000, 10000}};

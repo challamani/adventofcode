@@ -18,14 +18,13 @@ public class Day3 implements Puzzle<String,Integer>{
      * a,b,c - 97,98,99
      * */
     @Override
-    public Integer solve(String input) {
+    public Integer part2(String input) {
 
         int finalResult = 0;
         String[] records = input.split("\\n");
         int index=0;
 
         while (index < records.length) {
-
             String segment1 = records[index];
             String segment2 = records[index+1];
             String segment3 = records[index+2];
@@ -56,7 +55,7 @@ public class Day3 implements Puzzle<String,Integer>{
         return finalResult;
     }
 
-    private int part1(String input) {
+    public Integer part1(String input) {
         AtomicInteger finalResult = new AtomicInteger();
         Arrays.stream(input.split("\\n")).forEach(record -> {
             int len = record.length();

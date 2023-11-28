@@ -29,7 +29,12 @@ public class Day7 implements Puzzle<String,Integer> {
     }
 
     @Override
-    public Integer solve(String input) {
+    public Integer part1(String input) {
+        return null;
+    }
+
+    @Override
+    public Integer part2(String input) {
         String current_dir="ROOT";
         Map<String,Integer> dirSize = new HashMap<>();
 
@@ -81,9 +86,9 @@ public class Day7 implements Puzzle<String,Integer> {
         int requiredSpace = (30000000 - unusedSpace);
 
         AtomicInteger min = new AtomicInteger(Integer.MAX_VALUE);
-        dirSize.entrySet().stream().forEach(stringIntegerEntry -> {
-            if(requiredSpace <= stringIntegerEntry.getValue() && min.get() > stringIntegerEntry.getValue()){
-                min.set(stringIntegerEntry.getValue());
+        dirSize.forEach((key, value) -> {
+            if (requiredSpace <= value && min.get() > value) {
+                min.set(value);
             }
         });
         
